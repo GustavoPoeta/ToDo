@@ -37,7 +37,7 @@
 
     public class ItemFactory
     {
-        public Item Create(int id, string name, string description)
+        public static Item Create(int id, string name, string description)
         {
             if (id <= 0)
             {
