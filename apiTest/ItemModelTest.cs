@@ -5,15 +5,13 @@ namespace apiTests
     public class ItemModelTest
     {
         [Fact]
-        public void Invalid_id_param_throw_error()
+        public void Invalid_name_param_throw_error()
         {
-            // id is invalid, error should be ArgumentException: "id is not valid"
-            const int id = -1;
-
-            const string validName = "John Doe";
+            // name is invalid, error should be ArgumentException: "name is not valid"
+            const string invalidName = "";
             const string validDescription = "Hello world";
             
-            var johnDoe = ItemFactory.Create(id, validName, validDescription);
+            var johnDoe = ItemFactory.Create(invalidName, validDescription);
         }
     }
 }

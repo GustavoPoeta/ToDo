@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Xml;
 using API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,10 +18,18 @@ namespace API.Controllers
         }
 
         [HttpPost("read-from-body")]
-        public IActionResult CreateItem([FromBody] Item model)
+        public async Task<IActionResult> CreateItem([FromBody] Item model)
         {
-            var message = $"message: {model.Id}, {model.Name}, {model.Description}";
-            return Ok(message);
+            await _dbContext.Items.AddAsync(model);
+            await _dbContext.SaveChangesAsync();
+            return Ok("Item added to database");
+        }
+
+        [HttpGet]
+        public IActionResult GetItems()
+        {
+            var items = _dbContext.Items.ToList();
+            return Ok(items);
         }
     }
 }

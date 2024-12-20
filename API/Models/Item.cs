@@ -1,4 +1,6 @@
-﻿namespace API.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace API.Models
 {
     public class Item
     {
@@ -13,21 +15,22 @@
             set => _id = value;
         }
 
+        [MaxLength(255)]
         public string Name
         {
             get => _name;
             set => _name = value;
         }
 
+        [MaxLength(500)]
         public string Description
         {
             get => _description;
             set => _description = value;
         }
 
-        public Item(int id, string name, string description)
+        public Item(string name, string description)
         {
-            Id = id;
             Name = name;
             Description = description;
         }
@@ -37,12 +40,8 @@
 
     public class ItemFactory
     {
-        public static Item Create(int id, string name, string description)
+        public static Item Create(string name, string description)
         {
-            if (id <= 0)
-            {
-                throw new ArgumentException("Id is not valid.");
-            }
 
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -50,7 +49,6 @@
             }
 
             return new Item(
-                id,
                 name, 
                 string.IsNullOrWhiteSpace(description) ? string.Empty : description
                 );

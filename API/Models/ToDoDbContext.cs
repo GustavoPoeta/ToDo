@@ -20,6 +20,7 @@ namespace API.Models
         public void Configure(EntityTypeBuilder<Item> builder)
         {
             builder.ToTable("users");
+            builder.Property(u => u.Id).ValueGeneratedOnAdd();
         }
     }
 }
