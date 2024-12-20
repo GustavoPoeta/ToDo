@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using API.Models;
+using System;
 
 namespace API
 {
@@ -10,7 +13,11 @@ namespace API
             // Add services to the container.
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+            var connectionString = builder.Configuration.GetConnectionString("sqlServerCS");
+            builder.Services.AddDbContext<ToDoDbContext>(options =>
+                options.UseSqlServer(connectionString));
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
