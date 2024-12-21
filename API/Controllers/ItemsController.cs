@@ -3,6 +3,7 @@ using System.Xml;
 using API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -25,14 +26,24 @@ namespace API.Controllers
         {
             await _dbContext.Items.AddAsync(model);
             await _dbContext.SaveChangesAsync();
-            return Ok("Item added to database");
+            return Created();
         }
 
+
+        
         [HttpGet]
-        public IActionResult GetItems() // Return an array of all items in the format of json objects. 
+        public async Task<IActionResult> GetItems() // Return an array of all items in the format of json objects. 
         {
-            var items = _dbContext.Items.ToList();
+            var items = await _dbContext.Items.ToListAsync();
+
+            if (items.Count == 0)
+            {
+                return NotFound("There is not an item in the database.");
+            }
+
             return Ok(items);
+
         }
+
     }
 }
