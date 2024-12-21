@@ -46,6 +46,8 @@ namespace API.Controllers
 
         }
 
+
+        // Search for an item with the given id, and if it finds one, changes its content.
         [HttpPut("read-from-body")]
         public async Task<IActionResult> ChangeItem([FromBody] Item model)
         {
