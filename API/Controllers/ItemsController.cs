@@ -30,7 +30,6 @@ namespace API.Controllers
             return Created();
         }
 
-
         
         [HttpGet]
         public async Task<IActionResult> GetItems() // Return an array of all items in the format of json objects. 

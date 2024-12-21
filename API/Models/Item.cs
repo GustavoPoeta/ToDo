@@ -5,10 +5,15 @@ namespace API.Models
 {
     public class Item
     {
+        private int? _id = 0;
         private string _name = string.Empty;
         private string _description = string.Empty;
 
-        public int Id { get; }
+        public int Id
+        {
+            get => _id ?? 0;
+            set => _id = value;
+        }
 
         [MaxLength(255)]
         [Required]
