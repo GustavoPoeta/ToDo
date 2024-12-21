@@ -76,8 +76,9 @@ namespace API.Controllers
         }
 
 
+        // Search for an item with the given id, and if it finds one, it deletes it.
         [HttpDelete("read-from-body")]
-        public async Task<IActionResult> DeleteItem([FromBody] int id)
+        public async Task<IActionResult> DeleteItem([FromBody] int id) 
         {
             var item = await _dbContext.Items.FindAsync(id);
 
