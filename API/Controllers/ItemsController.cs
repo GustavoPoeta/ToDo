@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Reflection.Metadata.Ecma335;
+using System.Text;
 using System.Xml;
 using API.Models;
 using Microsoft.AspNetCore.Http;
@@ -43,6 +44,34 @@ namespace API.Controllers
 
             return Ok(items);
 
+        }
+
+        [HttpPut("read-from-body")]
+        public async Task<IActionResult> ChangeItem([FromBody] Item model)
+        {
+            if (model.Id == 0)
+            {
+                return BadRequest("An id was not given.");
+            }
+
+            var item = await _dbContext.Items.FindAsync(model.Id);
+
+            if (item == null)
+            {
+                return NotFound("Id does not correspond to any item.");
+            }
+
+            item.Name = model.Name;
+            item.Description = model.Description;
+
+            var entriesWritten = await _dbContext.SaveChangesAsync();
+
+            if (entriesWritten == 0)
+            {
+                return Problem("Changes were not applied to the item", statusCode: 500);
+            }
+
+            return Ok($"{entriesWritten} changes were made.");
         }
 
     }
