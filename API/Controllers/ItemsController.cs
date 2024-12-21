@@ -75,5 +75,22 @@ namespace API.Controllers
             return Ok($"{entriesWritten} changes were made.");
         }
 
+
+        [HttpDelete("read-from-body")]
+        public async Task<IActionResult> DeleteItem([FromBody] int id)
+        {
+            var item = await _dbContext.Items.FindAsync(id);
+
+            if (item == null)
+            {
+                return NotFound("Id does not correspond to any item.");
+            }
+
+            _dbContext.Items.Remove(item);
+            await _dbContext.SaveChangesAsync();
+
+            return Ok("Item deleted.");
+        }
+
     }
 }
