@@ -17,8 +17,11 @@ namespace API.Controllers
             _dbContext = dbContext;
         }
 
+
+
+        // Insert a new Item to the database. Body must contain name and/or description. id is ignored.
         [HttpPost("read-from-body")]
-        public async Task<IActionResult> CreateItem([FromBody] Item model)
+        public async Task<IActionResult> CreateItem([FromBody] Item model) 
         {
             await _dbContext.Items.AddAsync(model);
             await _dbContext.SaveChangesAsync();
@@ -26,7 +29,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetItems()
+        public IActionResult GetItems() // Return an array of all items in the format of json objects. 
         {
             var items = _dbContext.Items.ToList();
             return Ok(items);
